@@ -23,7 +23,7 @@ except ImportError:
 def load_documents():
     # Example: Replace with your actual document loading
     try:
-        with open("bunq_full_docs.txt", 'r', encoding="utf-8") as file:
+        with open("scraped_data\\bunq_full_docs.txt", 'r', encoding="utf-8") as file:
             content = file.read()
     except FileNotFoundError:
         # Fallback content if file doesn't exist
