@@ -1,11 +1,6 @@
 import streamlit as st
-import base64
-from PIL import Image
-import io
-import time
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
-from utils import InputDocument 
 
 # Try to import NvidiaRAGPipeline
 try:
@@ -419,7 +414,7 @@ if 'chatbot' not in st.query_params:
         """, unsafe_allow_html=True)
 
     # Add floating chat button that opens in a new tab
-    st.markdown(f"""
+    st.markdown("""
     <a href="?chatbot=true" target="_blank" class="floating-chat-btn">
         💬
     </a>
@@ -559,7 +554,7 @@ else:
                         for source in sources:
                             st.write(source)
                 
-            except Exception as e:
+            except Exception:
                 error_message = "Sorry, I encountered an error. Please try again."
                 message_placeholder.markdown(error_message)
                 st.session_state.messages.append({"role": "assistant", "content": error_message})

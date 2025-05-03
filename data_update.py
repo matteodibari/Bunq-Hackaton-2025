@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import os
-import re
 from datetime import datetime
 import json
 from selenium import webdriver
