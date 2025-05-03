@@ -1,6 +1,4 @@
 from pydantic import BaseModel, Field
-import requests
-from bs4 import BeautifulSoup
 
 
 class InputDocument(BaseModel):
