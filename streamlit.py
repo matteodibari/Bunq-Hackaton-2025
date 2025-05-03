@@ -430,12 +430,12 @@ else:
     # Initialize RAG pipeline for chatbot
     rag_pipeline = initialize_rag_pipeline()
     
-    # Set page configuration for chatbot
-    st.set_page_config(
-        page_title="bunq API Assistant",
-        page_icon=":speech_balloon:",
-        layout="centered"
-    )
+    # # Set page configuration for chatbot
+    # st.set_page_config(
+    #     page_title="bunq API Assistant",
+    #     page_icon=":speech_balloon:",
+    #     layout="centered"
+    # )
     
     # Custom CSS for the chatbot page
     st.markdown("""
