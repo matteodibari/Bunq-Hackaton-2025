@@ -2,7 +2,6 @@ import streamlit as st
 import time 
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument 
-import os
 
 # --- 1. Setup & Import ---
 from rag import NvidiaRAGPipeline
