@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
+import os
 
 # Try to import NvidiaRAGPipeline
 try:
@@ -12,27 +13,18 @@ except Exception as e:
 @st.cache_data  # Cache the raw data
 def load_documents():
     # Example: Replace with your actual document loading
-    try:
-        with open("scraped_data\\bunq_full_docs.txt", 'r', encoding="utf-8") as file:
-            content = file.read()
-    except FileNotFoundError:
-        # Fallback content if file doesn't exist
-        content = """
-        # bunq API Documentation
-        Welcome to the bunq API documentation. The bunq API is RESTful and has predictable resource-oriented URLs.
-        ## Authentication
-        To use the bunq API, you need to authenticate using OAuth 2.0 or API keys.
-        ## Rate Limits
-        The bunq API has rate limits to prevent abuse.
-        """
     
     text_splitter = MarkdownTextSplitter()
-    texts = text_splitter.split_text(content)
-
     input_documents = []
-    for text in texts:
-        input_documents.append(InputDocument(content=text, metadata={"source": None}))
-  
+
+    for file in os.listdir("scraped_data"):
+        with open(os.path.join("scraped_data", file), 'r', encoding="utf-8") as f:
+            content = f.read()
+            texts = text_splitter.split_text(content)
+        
+        for text in texts:
+            input_documents.append(InputDocument(content=text, metadata={"source": None}))
+
     return input_documents
 
 # Cache the RAG pipeline resource itself
@@ -732,10 +724,10 @@ else:
                 st.session_state.messages.append({"role": "assistant", "content": response})
                 
                 # Display sources if available
-                if sources and sources[0] != "No sources available":
-                    with st.expander("Sources"):
-                        for source in sources:
-                            st.write(source)
+                # if sources and sources[0] != "No sources available":
+                #     with st.expander("Sources"):
+                #         for source in sources:
+                #             st.write(source)
                 
             except Exception:
                 error_message = "Sorry, I encountered an error. Please try again."
