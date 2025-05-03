@@ -8,11 +8,11 @@ import queue
 options = Options()
 options.headless = True
 driver = webdriver.Firefox(options=options)
-
+ 
 # Base URL
 base_url = "https://doc.bunq.com"
 
-# Initialize queue and set to track visited URLs
+# Initialize queue and set to track visited URLss
 url_queue = queue.Queue()
 visited_urls = set()
 
