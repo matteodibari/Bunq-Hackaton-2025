@@ -1,100 +1,93 @@
-# Bunq API Documentation RAG System
+# Bunq Hackathon 2025 Project
 
 ## Overview
+This project is developed for the Bunq Hackathon 2025. It includes tools and scripts for web scraping, data processing, and building a Streamlit-based application. The project leverages various Python libraries to handle tasks such as scraping Medium posts, processing embeddings, and interacting with AI models.
 
-This project implements a Retrieval-Augmented Generation (RAG) system to efficiently query and retrieve information from the Bunq API documentation. It leverages LangChain, NVIDIA AI endpoints, and a custom RAG pipeline to provide accurate and context-aware answers to user queries.
+## Project Structure
+```
+data_update.py          # Script for updating data
+embeddings.npy          # Precomputed embeddings file
+env_variables.json      # Environment variables configuration
+logo.png                # Project logo
+rag.py                  # Script for retrieval-augmented generation
+requirements.txt        # Python dependencies
+scrapping_medium.py     # Script for scraping Medium posts
+streamlit.py            # Streamlit application entry point
+utils.py                # Utility functions
 
-## Features
+scraped_data/           # Directory containing scraped data
+  bunq_full_docs.txt    # Full documentation scraped
+  medium_bunq_posts.txt # Medium posts related to Bunq
 
-- **Efficient Text Processing:** Uses `MarkdownTextSplitter` to split the Bunq API documentation into manageable chunks.
-- **NVIDIA AI Integration:** Employs NVIDIA's `ChatNVIDIA` for generating responses based on retrieved information.
-- **Custom RAG Pipeline:** Implements a `NvidiaRAGPipeline` for retrieving relevant documents and generating answers.
-- **Environment Variable Management:** Securely manages API keys using a `.env` file.
-
-## Requirements
-
-- Python 3.10+
-- NVIDIA API Key
-- Required Python packages (see `requirements.txt`)
+streamlit-version/      # Streamlit application compiled files
+  __pycache__/          # Python cache files
+```
 
 ## Installation
 
 1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd Bunq-Hackaton-2025
+   ```
 
-    ```bash
-    git clone <repository_url>
-    cd <project_directory>
-    ```
+2. Set up a virtual environment (optional but recommended):
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-2. Create a virtual environment (recommended):
+3. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # On Linux/macOS
-    # venv\Scripts\activate  # On Windows
-    ```
-
-3. Install the required packages:
-
-    ```bash
-    pip install -r requirements.txt
-    ```
-
-4. Create a `.env` file in the project root and add your NVIDIA API key:
-
-    ```
-    NVIDIA_API_KEY=<your_nvidia_api_key>
-    ```
+4. Configure environment variables:
+   - Update `env_variables.json` with the necessary API keys and configurations.
 
 ## Usage
 
-1. Place the Bunq API documentation in a text file named `bunq_full_docs.txt` in the `scraped_data` directory.
+### Web Scraping
+- Run `scrapping_medium.py` to scrape Medium posts related to Bunq:
+  ```bash
+  python scrapping_medium.py
+  ```
 
-2. Run the `test.py` script:
+### Data Update
+- Use `data_update.py` to process and update data:
+  ```bash
+  python data_update.py
+  ```
 
-    ```bash
-    python test.py
-    ```
+### Streamlit Application
+- Launch the Streamlit app:
+  ```bash
+  streamlit run streamlit.py
+  ```
 
-    The script will initialize the RAG pipeline, and then query the system with two example questions:
+## Dependencies
+The project uses the following Python libraries:
+- `beautifulsoup4`
+- `langchain_core`
+- `langchain_nvidia_ai_endpoints`
+- `langchain_text_splitters`
+- `numpy`
+- `pydantic`
+- `python-dotenv`
+- `selenium`
+- `tenacity`
+- `streamlit`
 
-    - "Tell me the account information for service providers?"
-    - "Which is the bunq api object directly connected to the user and why is it directly connected?"
-
-    The script will print the assistant's response and the sources used to generate the response for each query.
-
-## Project Structure
-
-```
-.
-├── scraped_data/
-│   └── bunq_full_docs.txt  # Bunq API documentation
-├── streamlit-version/
-│   └── app.py              # Streamlit app for the project
-├── data_update.py          # Script for updating data
-├── embeddings.npy          # Precomputed embeddings
-├── env_variables.json      # Environment variables in JSON format
-├── rag.py                  # Custom RAG pipeline implementation
-├── README.md               # Project documentation
-├── requirements.txt        # Python package dependencies
-├── streamlit.py            # Streamlit script
-├── test.py                 # Main script
-├── utils.py                # Utility functions
-└── __pycache__/            # Compiled Python files
-```
-
-## Code Overview
-
-- **`test.py`**: This is the main script that loads the Bunq API documentation, initializes the RAG pipeline, and runs example queries. It demonstrates how to use the `NvidiaRAGPipeline` to get answers to questions about the Bunq API.
-- **`rag.py`**: This file contains the implementation of the `NvidiaRAGPipeline` class. This class handles the retrieval of relevant documents and the generation of answers using the `ChatNVIDIA` model.
-- **`streamlit-version/app.py`**: A Streamlit app for interacting with the RAG system through a web interface.
-
-## Troubleshooting
-
-- **Missing API Key Warning:** Ensure that you have set the `NVIDIA_API_KEY` environment variable in your `.env` file.
-- **Model Not Found Error:** Verify that the model name specified in `test.py` is a valid model supported by NVIDIA AI endpoints.
-- **Other Errors:** Check the traceback for specific error messages and consult the documentation for LangChain and NVIDIA AI endpoints.
+Refer to `requirements.txt` for the exact versions.
 
 ## License
+This project is licensed under the MIT License. See the LICENSE file for details.
 
-[Specify the license under which your project is released] (e.g., MIT License)
+## Contributors
+- Nirmalkumar Balamurugan - Developer and Actor
+- Nitish Kumar Gnanasekaran - Developer
+- Matteo Di Bari - Developer and Voice Actor
+- Anant Trivedi - Developer
+
+## Acknowledgments
+Special thanks to Bunq for organizing this hackathon and providing the resources to make this project possible.
