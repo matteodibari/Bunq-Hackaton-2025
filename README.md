@@ -3,6 +3,11 @@
 ## Overview
 This project is developed for the bunq Hackathon 2025. It includes tools and scripts for web scraping, data processing, and building a Streamlit-based application. The project leverages various Python libraries to handle tasks such as scraping Medium posts, processing embeddings, and interacting with AI models.
 
+## Live Demo
+
+Check out the live demo hosted on Streamlit Community:  
+[Live Demo](https://bunq-hackaton-2025-nqqfu4khymxubt2bxkrg68.streamlit.app/~/+/?chatbot=true)
+
 ## Project Structure
 ```
 data_update.py          # Script for updating and processing data, including embeddings.
