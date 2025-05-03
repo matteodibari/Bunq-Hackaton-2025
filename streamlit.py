@@ -1,32 +1,18 @@
 import streamlit as st
-import time  # Optional: for simulating thinking time
+import time 
 from langchain_text_splitters import MarkdownTextSplitter
-from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
+from utils import InputDocument 
+import os
 
 # --- 1. Setup & Import ---
-# Assuming your NvidiaRAGPipeline class is in a file named 'rag.py'
-# Make sure 'rag.py' is in the same directory or your Python path
-try:
-    from rag import NvidiaRAGPipeline
-except ImportError:
-    st.error("Could not import NvidiaRAGPipeline. Make sure 'rag.py' is in the correct path.")
-    # Add a dummy class if import fails so the rest of the Streamlit app doesn't crash immediately
-    class NvidiaRAGPipeline:
-        def __init__(self, *args, **kwargs):
-            st.warning("Using dummy RAG pipeline because import failed.")
-        def generate_response(self, query):
-            st.warning("Dummy RAG pipeline cannot generate real responses.")
-            return f"Sorry, I couldn't process '{query}' due to an internal error.", ["No sources available"]
+from rag import NvidiaRAGPipeline
 
 # --- 2. Load Data & Initialize Pipeline (Cached) ---
 
-# Replace this with your actual document loading logic
-# Example: Load from text files, PDFs, etc.
 @st.cache_data  # Cache the raw data if loading is slow
 def load_documents():
-    print("Loading documents...") # Add print statement to see when this runs
-    # Example: Replace with your actual document loading
-    
+    print("Loading documents...") 
+
     with open("bunq_full_docs.txt", 'r', encoding="utf-8") as file:
         content = file.read()
 
@@ -39,9 +25,7 @@ def load_documents():
 
     rag_pipeline = NvidiaRAGPipeline(input_documents=input_documents, retrieve_k=20, rerank_k=5)
 
-
     print(f"Loaded {len(input_documents)} documents.")
-    
     return input_documents, rag_pipeline
 
 # Cache the RAG pipeline resource itself
@@ -52,9 +36,8 @@ def initialize_rag_pipeline():
     return rag_pipeline
 
 
-
 # --- App Title ---
-st.title("💬 NVIDIA RAG Chatbot")
+st.title("💬 Bunq Chatbot")
 st.caption("🚀 A Streamlit chatbot powered by NvidiaRAGPipeline")
 
 # --- Initialize Pipeline ---
@@ -71,11 +54,7 @@ for message in st.session_state.messages:
 
 # --- 5. Get User Input ---
 if prompt := st.chat_input("Ask me something..."):
-    if not rag_pipeline:
-        st.error("RAG Pipeline is not available. Please check the logs.")
-    else:
-        # --- 6. Process User Input ---
-
+        
         # Add user message to history and display it
         st.session_state.messages.append({"role": "user", "content": prompt})
         

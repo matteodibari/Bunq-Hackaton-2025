@@ -1,8 +1,7 @@
 import os
-from typing import List, Tuple, Union, Optional, Dict, Any
+from typing import List, Tuple, Dict, Any
 import numpy as np
 from tenacity import retry, stop_after_attempt, wait_exponential
-from pydantic import BaseModel, Field # Keep for potential external data structures
 
 # Langchain Imports
 from langchain_core.documents import Document as LangchainDocument
@@ -50,7 +49,7 @@ class NvidiaRAGPipeline:
         # --- Initialize NVIDIA Clients ---
         self.embedder = NVIDIAEmbeddings(model=NVIDIA_EMBED_MODEL)
         # Reranker requires the model name during initialization
-        self.reranker = NVIDIARerank(model=NVIDIA_RERANK_MODEL, top_n=self.rerank_k) # Set top_n here
+        self.reranker = NVIDIARerank(model=NVIDIA_RERANK_MODEL, top_n=self.rerank_k) # Set top_n here (has to match the top_k)
         self.llm = ChatNVIDIA(model=NVIDIA_CHAT_MODEL)
 
         # --- Process and Store Documents ---
@@ -207,20 +206,7 @@ class NvidiaRAGPipeline:
         top_candidates = [doc for doc, _ in similarities[:self.retrieve_k]]
         print(f"Initial retrieval found {len(top_candidates)} candidates.")
 
-
-        # *** Graph RAG Enhancement Point ***
-        # Here you would:
-        # a. Identify the nodes in your graph corresponding to `top_candidates`.
-        # b. Perform graph traversal (e.g., find neighbors, paths) starting from these nodes.
-        # c. Add relevant nodes found via traversal to the `top_candidates` list (or replace it).
-        # d. Ensure you have LangchainDocument representations for these graph nodes.
-        # Example conceptual steps:
-        # graph_nodes = self.graph_db.find_related_nodes([doc.metadata.get('graph_id') for doc in top_candidates])
-        # graph_docs = [self.convert_graph_node_to_document(node) for node in graph_nodes]
-        # combined_candidates = top_candidates + graph_docs # Add logic for deduplication/ranking
-
         # 5. Rerank the candidates
-        # Ensure rerank_k matches the NVIDIARerank top_n setting
         if self.reranker.top_n != self.rerank_k:
              print(f"Warning: rerank_k ({self.rerank_k}) differs from NVIDIARerank top_n ({self.reranker.top_n}). Using reranker's top_n.")
         # Pass the potentially expanded candidate list (if Graph RAG was added)
@@ -231,13 +217,17 @@ class NvidiaRAGPipeline:
     def _create_prompt_template(self) -> ChatPromptTemplate:
         """Creates the Langchain ChatPromptTemplate."""
         # Define the system message
-        system_template = """You are a helpful AI assistant for answering questions based on provided documentation context. Follow these rules strictly:
+        system_template = """You are 'Bunq Buddy', a helpful assistant specialized in answering questions about bunq's features, API, and services. 
+        Your purpose is to help users and Bunq engineers building applications using bunq's API.
+          Do not use any prior knowledge. Be concise and focus on the information present in the retrieved documents.        
+        Follow these rules strictly:
 1. Use ONLY the information from the 'Context Documents' section to answer the 'Current Question'.
 2. Analyze the 'Previous Conversation' for context, but base your answer *only* on the 'Context Documents'.
 3. If the context documents contain the answer, synthesize it clearly.
-4. If the context documents do NOT contain enough information to answer, state that clearly (e.g., "Based on the provided documents, I cannot answer this question."). Do NOT make up information.
-5. If you quote or paraphrase, indicate the source document if possible (e.g., "According to Document 1...").
+4. NEVER talk about documents or your context. Focus on the answer.
+5. If the answer is not found in the context, say politely that you cannot answer based on your knowledge.
 6. Be concise and directly answer the question.
+7. NEVEEER talk about documents.
 
 Context Documents:
 {context}"""
