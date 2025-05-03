@@ -13,7 +13,7 @@ This project implements a Retrieval-Augmented Generation (RAG) system to efficie
 
 ## Requirements
 
-- Python 3.8+
+- Python 3.10+
 - NVIDIA API Key
 - Required Python packages (see `requirements.txt`)
 
