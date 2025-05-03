@@ -225,9 +225,9 @@ class NvidiaRAGPipeline:
 2. Analyze the 'Previous Conversation' for context, but base your answer *only* on the 'Context Documents'.
 3. If the context documents contain the answer, synthesize it clearly.
 4. NEVER talk about documents or your context. Focus on the answer.
-5. If the answer is not found in the context, say politely that you cannot answer based on your knowledge.
+5. If the answer is not found in e context, say politely that you cannot answer based on your knowledge.
 6. Be concise and directly answer the question.
-7. NEVEEER talk about documents.
+7. NEVEEER talk about context documents.
 
 Context Documents:
 {context}"""

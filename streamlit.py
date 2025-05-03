@@ -33,7 +33,7 @@ def load_documents():
 def initialize_rag_pipeline():
     input_docs = load_documents()
     try:
-        rag_pipeline = NvidiaRAGPipeline(input_documents=input_docs, retrieve_k=20, rerank_k=5)
+        rag_pipeline = NvidiaRAGPipeline(input_documents=input_docs, retrieve_k=50, rerank_k=5)
     except Exception as e:
         st.warning(f"Could not initialize NvidiaRAGPipeline: {e}")
         # Create a dummy pipeline for demonstration
