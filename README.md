@@ -1,4 +1,4 @@
-# Bunq Hackathon 2025 Project
+# BunqBuddy - Hackathon 2025 Project
 
 ## Overview
 This project is developed for the Bunq Hackathon 2025. It includes tools and scripts for web scraping, data processing, and building a Streamlit-based application. The project leverages various Python libraries to handle tasks such as scraping Medium posts, processing embeddings, and interacting with AI models.
