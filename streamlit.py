@@ -1,29 +1,19 @@
 import streamlit as st
-import base64
-from PIL import Image
-import io
-import time
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
-from utils import InputDocument 
 
 # Try to import NvidiaRAGPipeline
 try:
     from rag import NvidiaRAGPipeline
-except ImportError:
-    # Add a dummy class if import fails
-    class NvidiaRAGPipeline:
-        def __init__(self, *args, **kwargs):
-            pass
-        def generate_response(self, query):
-            return f"I can help you with that! Here's information about '{query}' related to bunq API.", ["No sources available"]
+except Exception as e:
+    print(f"An error occured : {e}")
 
 # --- Load Data & Initialize Pipeline (Cached) ---
 @st.cache_data  # Cache the raw data
 def load_documents():
     # Example: Replace with your actual document loading
     try:
-        with open("bunq_full_docs.txt", 'r', encoding="utf-8") as file:
+        with open("scraped_data\\bunq_full_docs.txt", 'r', encoding="utf-8") as file:
             content = file.read()
     except FileNotFoundError:
         # Fallback content if file doesn't exist
@@ -424,7 +414,7 @@ if 'chatbot' not in st.query_params:
         """, unsafe_allow_html=True)
 
     # Add floating chat button that opens in a new tab
-    st.markdown(f"""
+    st.markdown("""
     <a href="?chatbot=true" target="_blank" class="floating-chat-btn">
         💬
     </a>
@@ -435,12 +425,12 @@ else:
     # Initialize RAG pipeline for chatbot
     rag_pipeline = initialize_rag_pipeline()
     
-    # Set page configuration for chatbot
-    st.set_page_config(
-        page_title="bunq API Assistant",
-        page_icon=":speech_balloon:",
-        layout="centered"
-    )
+    # # Set page configuration for chatbot
+    # st.set_page_config(
+    #     page_title="bunq API Assistant",
+    #     page_icon=":speech_balloon:",
+    #     layout="centered"
+    # )
     
     # Custom CSS for the chatbot page
     st.markdown("""
@@ -747,7 +737,7 @@ else:
                         for source in sources:
                             st.write(source)
                 
-            except Exception as e:
+            except Exception:
                 error_message = "Sorry, I encountered an error. Please try again."
                 message_placeholder.markdown(error_message)
                 st.session_state.messages.append({"role": "assistant", "content": error_message})
