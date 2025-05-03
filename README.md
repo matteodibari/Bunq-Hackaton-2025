@@ -8,6 +8,9 @@ This project is developed for the bunq Hackathon 2025. It includes tools and scr
 Check out the live demo hosted on Streamlit Community:  
 [Live Demo](https://bunq-hackaton-2025-nqqfu4khymxubt2bxkrg68.streamlit.app/~/+/?chatbot=true)
 
+Watch the project walkthrough on YouTube:  
+[YouTube Video](https://youtu.be/973mzO4tDnk)
+
 ## Project Structure
 ```
 data_update.py          # Script for updating and processing data, including embeddings.
