@@ -1,7 +1,7 @@
-# Bunq Hackathon 2025 Project
+# bunqBuddy - Hackathon 2025 Project
 
 ## Overview
-This project is developed for the Bunq Hackathon 2025. It includes tools and scripts for web scraping, data processing, and building a Streamlit-based application. The project leverages various Python libraries to handle tasks such as scraping Medium posts, processing embeddings, and interacting with AI models.
+This project is developed for the bunq Hackathon 2025. It includes tools and scripts for web scraping, data processing, and building a Streamlit-based application. The project leverages various Python libraries to handle tasks such as scraping Medium posts, processing embeddings, and interacting with AI models.
 
 ## Project Structure
 ```
@@ -90,4 +90,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Anant Trivedi - Developer
 
 ## Acknowledgments
-Special thanks to Bunq for organizing this hackathon and providing the resources to make this project possible.
+Special thanks to bunq for organizing this hackathon and providing the resources to make this project possible.
