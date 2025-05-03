@@ -1,6 +1,7 @@
 import streamlit as st
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
+import base64
 
 # Try to import NvidiaRAGPipeline
 try:
@@ -688,10 +689,18 @@ else:
     """, unsafe_allow_html=True)
     
     # Chatbot header
-    st.markdown("""
-    <div class="header">
-        <h1>💬 bunq API Assistant</h1>
-        <p>Ask me anything about the bunq API documentation</p>
+
+    def image_to_base64(image_path):
+        with open(image_path, "rb") as f:
+            data = f.read()
+        return base64.b64encode(data).decode()
+
+    img_base64 = image_to_base64("logo.png")
+
+    st.markdown(f"""
+    <div class="header" style="display: flex; align-items: center; gap: 10px;">
+        <img src="data:image/png;base64,{img_base64}" alt="Logo" width="40" height="40">
+        <h1>bunq API Assistant</h1>
     </div>
     """, unsafe_allow_html=True)
     
