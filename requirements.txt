@@ -1,0 +1,10 @@
+beautifulsoup4==4.13.4
+langchain_core==0.3.58
+langchain_nvidia_ai_endpoints==0.3.9
+langchain_text_splitters==0.3.8
+numpy==2.2.5
+pydantic==2.11.4
+python-dotenv==1.1.0
+selenium==4.32.0
+tenacity==9.1.2
+streamlit

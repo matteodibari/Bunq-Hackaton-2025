@@ -5,6 +5,7 @@ import io
 import time
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
+from utils import InputDocument 
 
 # Try to import NvidiaRAGPipeline
 try:

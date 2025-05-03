@@ -1,8 +1,8 @@
 from langchain_text_splitters import MarkdownTextSplitter
+from rag import NvidiaRAGPipeline
 from langchain_nvidia_ai_endpoints import ChatNVIDIA
 from dotenv import load_dotenv
 import os
-from pprint import pprint
 from rag import InputDocument
 
 load_dotenv()
@@ -32,7 +32,7 @@ for text in texts:
 # print(output.content)
 
 
-from rag import NvidiaRAGPipeline
+
 
 rag_pipeline = NvidiaRAGPipeline(input_documents=input_documents, retrieve_k=20, rerank_k=5)
 query1 = "Tell me the account information for service providers?"
