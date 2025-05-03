@@ -42,7 +42,7 @@ def load_documents():
     input_documents = []
     for text in texts:
         input_documents.append(InputDocument(content=text, metadata={"source": None}))
-    
+  
     return input_documents
 
 # Cache the RAG pipeline resource itself
@@ -445,73 +445,256 @@ else:
     # Custom CSS for the chatbot page
     st.markdown("""
     <style>
-        /* Global styling */
-        body {
-            color: white;
-            background-color: #1e1e1e;
-        }
-        
-        /* Header styling */
-        .header {
-            background-color: #4CAF50;
-            padding: 20px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            text-align: center;
-            color: white;
-        }
-        
-        /* Message styling */
-        .chat-message {
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        
-        .user-message {
-            background-color: #4CAF50;
-            color: white;
-            border-top-right-radius: 0;
-        }
-        
-        .assistant-message {
-            background-color: #333;
-            color: white;
-            border-top-left-radius: 0;
-        }
-        
-        /* Override Streamlit defaults */
-        .stApp, .css-18e3th9, .css-1d391kg, .css-1vq4p4l {
-            background-color: #1e1e1e;
-        }
-        
-        .st-bm, .st-af, .st-ae, .st-ag {
-            background-color: #1e1e1e;
-        }
-        
-        /* Button styling */
-        .stButton > button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .stButton > button:hover {
-            background-color: #45a049;
-        }
-        
-        /* Chat input styling */
-        .stTextInput > div > div > input {
-            background-color: #333;
-            color: white;
-            border: 1px solid #444;
-            border-radius: 5px;
-        }
-    </style>
+    /* Global styling */
+    body {
+        color: white;
+        background-color: #1e1e1e;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Header styling */
+    .stApp header {
+        background-color: #1e1e1e;
+        color: white;
+    }
+
+    /* Header Container */
+    .header-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        background-color: #1e1e1e;
+        border-bottom: 1px solid #333;
+        margin-bottom: 20px;
+    }
+
+    .logo-text {
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        display: flex;
+        align-items: center;
+    }
+
+    .search-container {
+        display: flex;
+        align-items: center;
+        background-color: #333;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+
+    .search-input {
+        background-color: transparent;
+        border: none;
+        color: white;
+        padding: 5px;
+        width: 220px;
+        font-size: 16px;
+    }
+
+    .search-shortcut {
+        background-color: #444;
+        padding: 2px 4px;
+        border-radius: 3px;
+        font-size: 12px;
+        margin-left: 5px;
+    }
+
+    .nav-links {
+        display: flex;
+        gap: 20px;
+    }
+
+    .nav-link {
+        color: #ccc;
+        text-decoration: none;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .nav-link:hover {
+        color: #FF9800;
+    }
+
+    /* Main content */
+    .main-content {
+        display: flex;
+        padding: 0 20px;
+    }
+
+    /* Banner styling */
+    .banner {
+        background: linear-gradient(90deg, #4CAF50, #2196F3, #9C27B0, #F44336, #FF9800);
+        padding: 40px;
+        border-radius: 5px;
+        text-align: center;
+        color: white;
+        margin-bottom: 30px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+
+    .banner h1 {
+        font-size: 72px;
+        margin-bottom: 10px;
+    }
+
+    .banner h2 {
+        font-size: 28px;
+    }
+
+    /* Warning box */
+    .warning-box {
+        background-color: rgba(244, 67, 54, 0.2);
+        border-left: 4px solid #F44336;
+        padding: 15px;
+        margin-bottom: 30px;
+        border-radius: 4px;
+    }
+
+    /* Section headers */
+    .section-header {
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        margin-top: 30px;
+        color: #FF9800;
+    }
+
+    /* Sidebar customization */
+    .css-1d391kg {
+        background-color: #1e1e1e;
+        border-right: 2px solid #333;
+    }
+
+    .sidebar-title {
+        font-size: 14px;
+        text-transform: uppercase;
+        color: #999;
+        margin-bottom: 15px;
+    }
+
+    .sidebar-link {
+        padding: 8px 0;
+        color: #ccc;
+        text-decoration: none;
+        display: block;
+        font-size: 16px;
+    }
+
+    .sidebar-link:hover {
+        color: white;
+    }
+
+    .sidebar-link.active {
+        color: #FF9800;
+        font-weight: bold;
+    }
+
+    /* Feedback section */
+    .feedback-container {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 40px;
+    }
+
+    .feedback-text {
+        color: #999;
+    }
+
+    .feedback-button {
+        background-color: transparent;
+        border: 1px solid #444;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    /* Tabs Styling */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 2px;
+    }
+
+    .stTabs [data-baseweb="tab"] {
+        background-color: #333;
+        border-radius: 4px 4px 0px 0px;
+        padding: 10px 20px;
+        color: white;
+        font-size: 16px;
+    }
+
+    .stTabs [aria-selected="true"] {
+        background-color: #444;
+    }
+
+    /* Floating Chat Button */
+    .floating-chat-btn {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: #FF9800;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+        cursor: pointer;
+        z-index: 9999;
+        transition: all 0.3s ease;
+    }
+
+    .floating-chat-btn:hover {
+        transform: scale(1.1);
+        box-shadow: 0 6px 16px rgba(0,0,0,0.5);
+    }
+
+    /* Button styling */
+    .stButton > button {
+        background-color: #333;
+        color: white;
+        border: 1px solid #444;
+        padding: 10px 20px;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .stButton > button:hover {
+        background-color: #444;
+    }
+
+    /* Markdown styling */
+    .markdown-text-container p {
+        color: #ddd;
+        line-height: 1.6;
+        margin-bottom: 20px;
+    }
+
+    .markdown-text-container h1, .markdown-text-container h2, 
+    .markdown-text-container h3, .markdown-text-container h4 {
+        color: white;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+
+    .section-divider {
+        border-top: 1px solid #333;
+        margin: 30px 0;
+    }
+</style>
+
     """, unsafe_allow_html=True)
     
     # Chatbot header
