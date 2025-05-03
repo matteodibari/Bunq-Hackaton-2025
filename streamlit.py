@@ -10,13 +10,8 @@ from utils import InputDocument
 # Try to import NvidiaRAGPipeline
 try:
     from rag import NvidiaRAGPipeline
-except ImportError:
-    # Add a dummy class if import fails
-    class NvidiaRAGPipeline:
-        def __init__(self, *args, **kwargs):
-            pass
-        def generate_response(self, query):
-            return f"I can help you with that! Here's information about '{query}' related to bunq API.", ["No sources available"]
+except Exception as e:
+    print(f"An error occured : {e}")
 
 # --- Load Data & Initialize Pipeline (Cached) ---
 @st.cache_data  # Cache the raw data
