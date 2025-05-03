@@ -1,3 +1,8 @@
+"""
+NVIDIA RAG Pipeline using Langchain and NVIDIA AI Endpoints
+This script implements a Retrieval-Augmented Generation (RAG) pipeline using NVIDIA models via Langchain.
+"""
+
 import os
 from typing import List, Tuple, Dict
 import numpy as np

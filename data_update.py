@@ -1,3 +1,10 @@
+"""
+This script scrapes the bunq documentation website for updates and saves the content to a text file.
+It uses Selenium to handle dynamic content and BeautifulSoup for parsing HTML.
+"""
+
+
+
 import requests
 from bs4 import BeautifulSoup
 import os

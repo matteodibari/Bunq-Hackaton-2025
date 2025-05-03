@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field
 
-
 class InputDocument(BaseModel):
     """
     Represents raw document data before processing.

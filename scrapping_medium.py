@@ -1,3 +1,8 @@
+"""
+This script scrapes articles from the Medium blog of bunq developers corner.
+It extracts article links, content, and saves them to text files.
+"""
+
 import requests
 from bs4 import BeautifulSoup
 import time

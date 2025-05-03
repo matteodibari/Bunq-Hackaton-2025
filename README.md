@@ -5,22 +5,22 @@ This project is developed for the Bunq Hackathon 2025. It includes tools and scr
 
 ## Project Structure
 ```
-data_update.py          # Script for updating data
-embeddings.npy          # Precomputed embeddings file
-env_variables.json      # Environment variables configuration
-logo.png                # Project logo
-rag.py                  # Script for retrieval-augmented generation
-requirements.txt        # Python dependencies
-scrapping_medium.py     # Script for scraping Medium posts
-streamlit.py            # Streamlit application entry point
-utils.py                # Utility functions
+data_update.py          # Script for updating and processing data, including embeddings.
+embeddings.npy          # Precomputed embeddings file used for AI model interactions.
+env_variables.json      # Configuration file for storing environment variables like API keys.
+logo.png                # Project logo used in the Streamlit application.
+rag.py                  # Script for retrieval-augmented generation (RAG) tasks.
+requirements.txt        # List of Python dependencies required for the project.
+scrapping_medium.py     # Script for scraping Medium posts related to Bunq.
+streamlit.py            # Entry point for the Streamlit web application.
+utils.py                # Utility functions and data models used across the project.
 
-scraped_data/           # Directory containing scraped data
-  bunq_full_docs.txt    # Full documentation scraped
-  medium_bunq_posts.txt # Medium posts related to Bunq
+scraped_data/           # Directory containing scraped data.
+  bunq_full_docs.txt    # Full documentation scraped from relevant sources.
+  medium_bunq_posts.txt # Medium posts related to Bunq.
 
-streamlit-version/      # Streamlit application compiled files
-  __pycache__/          # Python cache files
+streamlit-version/      # Directory containing compiled Streamlit application files.
+  __pycache__/          # Python cache files.
 ```
 
 ## Installation

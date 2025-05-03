@@ -1,3 +1,9 @@
+"""
+Streamlit app for bunq API documentation and chatbot
+This app provides a user-friendly interface for exploring the bunq API documentation and interacting with a chatbot powered by NvidiaRAGPipeline.
+It includes features like a sidebar for navigation, a main content area for displaying documentation, and a chatbot interface for user queries.
+"""
+
 import streamlit as st
 from langchain_text_splitters import MarkdownTextSplitter
 from utils import InputDocument  # Assuming you have a utils.py with InputDocument class
