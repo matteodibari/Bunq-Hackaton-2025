@@ -10,6 +10,7 @@ from langchain_core.messages import HumanMessage, AIMessage, SystemMessage, Base
 from langchain_nvidia_ai_endpoints import NVIDIAEmbeddings, NVIDIARerank, ChatNVIDIA
 from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 from langchain_core.output_parsers import StrOutputParser
+from utils import InputDocument 
 
 # --- Configuration ---
 # Ensure your NVIDIA API key is set as an environment variable
@@ -26,12 +27,6 @@ EMBED_BATCH_SIZE = 100 # Keep batch size concept for embedding efficiency
 
 # --- Pydantic Model (Optional - Use if needed for input/output) ---
 # You might still use Pydantic for structuring input data before converting to Langchain Documents
-class InputDocument(BaseModel):
-    """
-    Represents raw document data before processing.
-    """
-    content: str = Field(..., description="The text content of the document chunk")
-    metadata: dict = Field(default_factory=dict, description="Metadata about the document chunk")
 
 # --- RAG Pipeline Class ---
 class NvidiaRAGPipeline:
@@ -319,49 +314,3 @@ Context Documents:
             print(f"NVIDIA LLM generation error: {str(e)}")
             # Provide a fallback error message
             return "Sorry, I encountered an error while generating the response.", []
-
-# --- Example Usage ---
-if __name__ == "__main__":
-    # 1. Prepare some sample documents (replace with your actual data loading)
-    sample_docs_data = [
-        InputDocument(content="Langchain provides tools for building LLM applications.", metadata={"source": "intro.md"}),
-        InputDocument(content="NVIDIA NeMo offers models for embedding and generation.", metadata={"source": "nvidia_intro.txt"}),
-        InputDocument(content="RAG combines retrieval with generation for better answers.", metadata={"source": "rag_overview.md"}),
-        InputDocument(content="Use NVIDIAEmbeddings for creating text vectors.", metadata={"source": "nvidia_embeddings.py"}),
-        InputDocument(content="ChatNVIDIA allows interaction with NVIDIA's chat models.", metadata={"source": "nvidia_chat.py"}),
-        InputDocument(content="NVIDIARerank improves relevance of retrieved documents.", metadata={"source": "nvidia_rerank.md"})
-    ]
-
-    # 2. Initialize the pipeline
-    rag_pipeline = NvidiaRAGPipeline(input_documents=sample_docs_data)
-
-    # 3. Simulate a chat interaction
-    chat_history_sim: List[Dict[str, str]] = []
-
-    query1 = "What is RAG?"
-    print(f"\nUser: {query1}")
-    response1, sources1 = rag_pipeline.generate_response(query1, chat_history_sim)
-    print(f"Assistant: {response1}")
-    print(f"Sources Used: {sources1}")
-    chat_history_sim.append({"role": "user", "content": query1})
-
-
-    print("-" * 20)
-
-    query2 = "How do I use NVIDIA models for reranking in Langchain?"
-    print(f"\nUser: {query2}")
-    response2, sources2 = rag_pipeline.generate_response(query2, chat_history_sim)
-    print(f"Assistant: {response2}")
-    print(f"Sources Used: {sources2}")
-    chat_history_sim.append({"role": "user", "content": query2})
-    chat_history_sim.append({"role": "assistant", "content": response2})
-
-    print("-" * 20)
-
-    query3 = "Tell me about GPUs." # Query likely not in context
-    print(f"\nUser: {query3}")
-    response3, sources3 = rag_pipeline.generate_response(query3, chat_history_sim)
-    print(f"Assistant: {response3}")
-    print(f"Sources Used: {sources3}")
-    chat_history_sim.append({"role": "user", "content": query3})
-    chat_history_sim.append({"role": "assistant", "content": response3})
